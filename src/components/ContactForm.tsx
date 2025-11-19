@@ -73,8 +73,15 @@ export function ContactForm() {
     } catch {
       setIsSubmitting(false);
       const subject = `Nuovo contatto da ${formData.name}`;
-      const body = `Nome: ${formData.name}%0AEmail: ${formData.email}%0ATelefono: ${formData.phone}%0AMessaggio:%0A${encodeURIComponent(formData.message)}`;
-      window.location.href = `mailto:arizay.guerra@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      const bodyPlain = `Nome: ${formData.name}\nEmail: ${formData.email}\nTelefono: ${formData.phone}\n\nMessaggio:\n${formData.message}`;
+      const mailtoUrl = `mailto:arizay.guerra@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyPlain)}`;
+      const a = document.createElement('a');
+      a.href = mailtoUrl;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setIsSuccess(true);
     }
   };
 
