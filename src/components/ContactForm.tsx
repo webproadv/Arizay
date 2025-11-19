@@ -52,10 +52,19 @@ export function ContactForm() {
     });
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/contact', {
+      const fd = new FormData();
+      fd.append('name', formData.name);
+      fd.append('email', formData.email);
+      fd.append('phone', formData.phone);
+      fd.append('message', formData.message);
+      fd.append('_subject', `Nuovo contatto da ${formData.name}`);
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
+
+      const res = await fetch('https://formsubmit.co/ajax/arizay.guerra@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        headers: { Accept: 'application/json' },
+        body: fd,
       });
 
       if (!res.ok) {
