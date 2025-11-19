@@ -59,7 +59,8 @@ export function ContactForm() {
       });
 
       if (!res.ok) {
-        throw new Error('Invio fallito');
+        const msg = await res.text();
+        throw new Error(msg || 'Invio fallito');
       }
 
       setIsSubmitting(false);
@@ -75,9 +76,10 @@ export function ContactForm() {
       setTimeout(() => {
         setIsSuccess(false);
       }, 5000);
-    } catch {
+    } catch (error) {
       setIsSubmitting(false);
-      setErrors((prev) => ({ ...prev, submit: "Errore durante l'invio. Riprova tra qualche minuto." }));
+      const message = (error as Error).message || "Errore durante l'invio. Riprova tra qualche minuto.";
+      setErrors((prev) => ({ ...prev, submit: message }));
     }
   };
 
