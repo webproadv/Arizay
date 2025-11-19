@@ -46,8 +46,17 @@ export function ContactForm() {
     }
 
     setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => {
+      if (!res.ok) {
+        throw new Error('Invio fallito');
+      }
+
       setIsSubmitting(false);
       setIsSuccess(true);
       setFormData({
@@ -61,7 +70,12 @@ export function ContactForm() {
       setTimeout(() => {
         setIsSuccess(false);
       }, 5000);
-    }, 1000);
+    } catch {
+      setIsSubmitting(false);
+      const subject = `Nuovo contatto da ${formData.name}`;
+      const body = `Nome: ${formData.name}%0AEmail: ${formData.email}%0ATelefono: ${formData.phone}%0AMessaggio:%0A${encodeURIComponent(formData.message)}`;
+      window.location.href = `mailto:arizay.guerra@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
   };
 
   const handleChange = (field: string, value: string | boolean) => {

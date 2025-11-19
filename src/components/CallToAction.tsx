@@ -1,4 +1,4 @@
-import { Phone, Mail, Calendar } from 'lucide-react';
+import { Phone, Mail, Calendar, MessageCircle } from 'lucide-react';
 
 export function CallToAction() {
   return (
@@ -33,6 +33,15 @@ export function CallToAction() {
           >
             <Mail className="w-6 h-6 group-hover:rotate-12 transition-transform" />
             <span>arizay.guerra@gmail.com</span>
+          </a>
+
+          <a
+            href="https://wa.me/393928165244"
+            className="group inline-flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-600 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            target="_blank" rel="noreferrer"
+          >
+            <MessageCircle className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+            <span>WhatsApp</span>
           </a>
         </div>
       </div>
