@@ -45,6 +45,11 @@ export function ContactForm() {
       return;
     }
 
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.submit;
+      return next;
+    });
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
@@ -72,16 +77,7 @@ export function ContactForm() {
       }, 5000);
     } catch {
       setIsSubmitting(false);
-      const subject = `Nuovo contatto da ${formData.name}`;
-      const bodyPlain = `Nome: ${formData.name}\nEmail: ${formData.email}\nTelefono: ${formData.phone}\n\nMessaggio:\n${formData.message}`;
-      const mailtoUrl = `mailto:arizay.guerra@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyPlain)}`;
-      const a = document.createElement('a');
-      a.href = mailtoUrl;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setIsSuccess(true);
+      setErrors((prev) => ({ ...prev, submit: "Errore durante l'invio. Riprova tra qualche minuto." }));
     }
   };
 
@@ -116,6 +112,12 @@ export function ContactForm() {
               <h3 className="text-green-900 font-semibold text-lg">Messaggio inviato con successo!</h3>
               <p className="text-green-700">Ti risponderò il prima possibile.</p>
             </div>
+          </div>
+        )}
+
+        {errors.submit && (
+          <div className="mb-8 bg-red-50 border-2 border-red-200 rounded-xl p-6">
+            <p className="text-red-700">{errors.submit}</p>
           </div>
         )}
 
