@@ -22,6 +22,8 @@ export function CallToAction() {
           <a
             href="tel:+393928165244"
             className="group inline-flex items-center gap-3 bg-white text-rose-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-rose-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            onClick={() => { window.fbq?.('trackCustom', 'PhoneCallClick'); window.fbq?.('track', 'Contact'); }}
+            onMouseDown={() => { window.gtag?.('event', 'contact_click', { channel: 'phone' }); }}
           >
             <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
             <span>+39 392 816 5244</span>
@@ -30,6 +32,8 @@ export function CallToAction() {
           <a
             href="mailto:arizay.guerra@gmail.com"
             className="group inline-flex items-center gap-3 bg-white/10 text-white border-2 border-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-rose-600 transition-all duration-300 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-105"
+            onClick={() => { window.fbq?.('trackCustom', 'EmailClick'); window.fbq?.('track', 'Contact'); }}
+            onMouseDown={() => { window.gtag?.('event', 'contact_click', { channel: 'email' }); }}
           >
             <Mail className="w-6 h-6 group-hover:rotate-12 transition-transform" />
             <span>arizay.guerra@gmail.com</span>
@@ -39,6 +43,8 @@ export function CallToAction() {
             href="https://wa.me/393928165244"
             className="group inline-flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-600 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             target="_blank" rel="noreferrer"
+            onClick={() => { window.fbq?.('trackCustom', 'WhatsAppClick'); window.fbq?.('track', 'Contact'); }}
+            onMouseDown={() => { window.gtag?.('event', 'contact_click', { channel: 'whatsapp' }); }}
           >
             <MessageCircle className="w-6 h-6 group-hover:rotate-12 transition-transform" />
             <span>WhatsApp</span>

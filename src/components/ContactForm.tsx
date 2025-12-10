@@ -52,25 +52,32 @@ export function ContactForm() {
     });
     setIsSubmitting(true);
     try {
-      const fd = new FormData();
-      fd.append('name', formData.name);
-      fd.append('email', formData.email);
-      fd.append('phone', formData.phone);
-      fd.append('message', formData.message);
-      fd.append('_subject', `Nuovo contatto da ${formData.name}`);
-      fd.append('_template', 'table');
-      fd.append('_captcha', 'false');
+      const body = new URLSearchParams();
+      body.append('name', formData.name);
+      body.append('email', formData.email);
+      body.append('phone', formData.phone);
+      body.append('message', formData.message);
+      body.append('_subject', `Nuovo contatto da ${formData.name}`);
+      body.append('_template', 'table');
+      body.append('_captcha', 'false');
 
       const res = await fetch('https://formsubmit.co/ajax/arizay.guerra@gmail.com', {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: fd,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body.toString(),
       });
 
       if (!res.ok) {
         const msg = await res.text();
         throw new Error(msg || 'Invio fallito');
       }
+
+      window.fbq?.('track', 'Lead');
+      window.fbq?.('trackCustom', 'ContactSubmit');
+      window.gtag?.('event', 'generate_lead', { form: 'contact' });
 
       setIsSubmitting(false);
       setIsSuccess(true);
